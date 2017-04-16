@@ -23,9 +23,9 @@ describe('#components/subscription_manager', () => {
 
   beforeEach(() => {
     nock.cleanAll();
-    pubnub = new PubNub({ subscribeKey: 'mySubKey', publishKey: 'myPublishKey', uuid: 'myUUID' });
-    pubnubWithPassingHeartbeats = new PubNub({ subscribeKey: 'mySubKey', publishKey: 'myPublishKey', uuid: 'myUUID', announceSuccessfulHeartbeats: true });
-    pubnubWithLimitedQueue = new PubNub({ subscribeKey: 'mySubKey', publishKey: 'myPublishKey', uuid: 'myUUID', requestMessageCountThreshold: 1 });
+    pubnub = new PubNub({ subscribeKey: 'mySubKey', publishKey: 'myPublishKey', uuid: 'myUUID', autoNetworkDetection: false });
+    pubnubWithPassingHeartbeats = new PubNub({ subscribeKey: 'mySubKey', publishKey: 'myPublishKey', uuid: 'myUUID', announceSuccessfulHeartbeats: true, autoNetworkDetection: false });
+    pubnubWithLimitedQueue = new PubNub({ subscribeKey: 'mySubKey', publishKey: 'myPublishKey', uuid: 'myUUID', requestMessageCountThreshold: 1, autoNetworkDetection: false });
   });
 
   afterEach(() => {
@@ -159,6 +159,7 @@ describe('#components/subscription_manager', () => {
   it('reports when heartbeats failed', (done) => {
     pubnub.addListener({
       status(statusPayload) {
+        console.log(statusPayload);
         if (statusPayload.operation !== PubNub.OPERATIONS.PNHeartbeatOperation) return;
         let statusWithoutError = _.omit(statusPayload, 'errorData');
         assert.deepEqual({

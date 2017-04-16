@@ -12,6 +12,11 @@ export default class extends PubNubCore {
     setup.db = new Database();
     setup.networking = new Networking({ keepAlive, get, post, proxy });
     setup.sdkFamily = 'Nodejs';
+
+    if (setup.autoNetworkDetection === undefined) {
+      setup.autoNetworkDetection = true;
+    }
+
     super(setup);
   }
 }

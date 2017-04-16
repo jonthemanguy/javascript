@@ -69,6 +69,9 @@ export default class {
 
   keepAliveSettings: ?KeepAliveStruct;
 
+  // if autoNetworkDetection config is true, the SDK will emit NetworkUp and NetworkDown when there changes in the networking
+  autoNetworkDetection: ?boolean;
+
   // alert when a heartbeat works out.
   announceSuccessfulHeartbeats: boolean;
   announceFailedHeartbeats: boolean;
@@ -128,6 +131,7 @@ export default class {
     this.proxy = setup.proxy;
     this.keepAlive = setup.keepAlive;
     this.keepAliveSettings = setup.keepAliveSettings;
+    this.autoNetworkDetection = setup.autoNetworkDetection || false;
 
     // if location config exist and we are in https, force secure to true.
     if (typeof location !== 'undefined' && location.protocol === 'https:') {
