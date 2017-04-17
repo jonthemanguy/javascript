@@ -159,7 +159,6 @@ describe('#components/subscription_manager', () => {
   it('reports when heartbeats failed', (done) => {
     pubnub.addListener({
       status(statusPayload) {
-        console.log(statusPayload);
         if (statusPayload.operation !== PubNub.OPERATIONS.PNHeartbeatOperation) return;
         let statusWithoutError = _.omit(statusPayload, 'errorData');
         assert.deepEqual({
